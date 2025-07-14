@@ -24,7 +24,7 @@ jobs:
 
       - name: Run dbt build on DEV
         env:
-          DBT_PROFILES_DIR: .
+          DBT_PROFILES_DIR: .dbt
         run: dbt build --target dev
 
   dbt-prod:
@@ -44,5 +44,5 @@ jobs:
 
       - name: Run dbt build on PROD
         env:
-          DBT_PROFILES_DIR: .
+          DBT_PROFILES_DIR: .dbt
         run: dbt build --target prod
