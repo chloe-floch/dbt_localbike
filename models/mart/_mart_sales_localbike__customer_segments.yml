@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: mrt_sales_localbike__customer_segments
+    description: '{{ doc("mrt_sales_localbike__customer_segments") }}'
+    columns:
+      - name: customer_id
+        description: "Customer unique identifier."
+      - name: customer_email
+        description: "Customer email address."
+      - name: customer_city
+        description: "Customer city for segmentation."
+      - name: customer_zipcode
+        description: "Customer postal code."
+      - name: number_of_orders
+        description: "Total number of orders placed by the customer."
+      - name: total_revenue
+        description: "Total amount spent by the customer."
+      - name: avg_order_value
+        description: "Average order value."
+      - name: customer_segment
+        description: "Segment: Low, Medium, or High Value customer."
+        tests:
+          - accepted_values:
+              values: ['Low Value', 'Medium Value', 'High Value']

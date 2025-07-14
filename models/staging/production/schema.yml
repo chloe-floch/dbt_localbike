@@ -1,0 +1,88 @@
+version: 2
+
+models:
+
+  - name: stg_sales_localbike__product
+    description: "Staging layer for products."
+    columns:
+      - name: product_id
+        description: "Primary Key: Unique identifier for each product. Used to join order_item and stock tables."
+        tests:
+          - unique
+          - not_null
+
+      - name: product_name
+        description: "Name of the product as shown in the catalog."
+
+      - name: brand_id
+        description: "Foreign Key: Links to stg_sales_localbike__brand table. Indicates which brand the product belongs to."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_sales_localbike__brand')
+              field: brand_id
+
+      - name: category_id
+        description: "Foreign Key: Links to stg_sales_localbike__category table. Identifies the product's category for analysis."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_sales_localbike__category')
+              field: category_id
+
+      - name: unit_price
+        description: "Unit price for the product."
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+
+  - name: stg_sales_localbike__brand
+    description: "Staging layer for brands."
+    columns:
+      - name: brand_id
+        description: "Primary Key: Unique identifier for each brand. Used to join products with brand info."
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_sales_localbike__category
+    description: "Staging layer for product categories."
+    columns:
+      - name: category_id
+        description: "Primary Key: Unique identifier for each category. Used to group products for reporting."
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_sales_localbike__stock
+    description: "Staging layer for product stock levels by store."
+    columns:
+      - name: pk_stock_id
+        description: "Synthetic Primary Key: combination of store_id and product_id."
+        tests:
+          - unique
+          - not_null
+
+      - name: product_id
+        description: "Foreign Key: Links to stg_sales_localbike__product table. Identifies which product the stock level applies to."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_sales_localbike__product')
+              field: product_id
+
+      - name: store_id
+        description: "Foreign Key: Links to stg_sales_localbike__store table. Indicates the store location for the stock."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_sales_localbike__store')
+              field: store_id
+
+      - name: quantity_available
+        description: "Number of units available in stock."
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0

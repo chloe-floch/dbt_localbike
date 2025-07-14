@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: int_sales_localbike__staff
+    description: '{{ doc("int_sales_localbike__staff") }}'
+    columns:
+      - name: staff_id
+        description: "Primary Key: Unique staff identifier."
+        tests:
+          - unique
+          - not_null
+      - name: manager_id_corrected
+        description: "Corrected manager ID for the hierarchy."
+      - name: hierarchy_issue_flag
+        description: "Flag indicating detected hierarchy issue."

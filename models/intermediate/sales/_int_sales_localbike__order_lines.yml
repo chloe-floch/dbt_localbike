@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: int_sales_localbike__order_lines
+    description: '{{ doc("int_sales_localbike__order_lines") }}'
+    columns:
+      - name: pk_order_item_id
+        description: "Synthetic Primary Key for the order line."
+        tests:
+          - unique
+          - not_null
+      - name: order_id
+        description: "Foreign Key: Parent order ID."
+      - name: product_id
+        description: "Foreign Key: Product purchased."

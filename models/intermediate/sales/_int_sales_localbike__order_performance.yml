@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: int_sales_localbike__order_performance
+    description: '{{ doc("int_sales_localbike__order_performance") }}'
+    columns:
+      - name: pk_order_item_id
+        description: "Synthetic Primary Key for the order line."
+        tests:
+          - unique
+          - not_null
+      - name: staff_id
+        description: "Foreign Key: Linked staff ID."
+      - name: product_id
+        description: "Foreign Key: Linked product ID."
+      - name: ordered_at
+        description: "Timestamp for the order line."

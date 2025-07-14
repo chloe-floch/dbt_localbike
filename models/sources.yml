@@ -1,0 +1,26 @@
+version: 2
+
+sources:
+  - name: sales_localbike
+    description: "Source tables for Local Bike sales and operations data."
+    schema: sales_localbike
+    tables:
+      - name: brand
+        description: "Raw table for bike brands."
+      - name: category
+        description: "Raw table for product categories."
+      - name: customer
+        description: "Raw table for customer information."
+      - name: order
+        description: "Raw table for customer orders."
+      - name: order_item
+        description: "Raw table for detailed order lines."
+      - name: product
+        description: "Raw table for products in the catalog."
+      - name: staff
+        description: "Raw table for employees and managers."
+      - name: stock
+        description: "Raw table for product stock levels by store."
+      - name: store
+        description: "Raw table for store information."
+

@@ -1,0 +1,144 @@
+version: 2
+
+models:
+
+  - name: stg_sales_localbike__order
+    description: "Staging layer for customer orders."
+    columns:
+      - name: order_id
+        description: "Primary Key: Unique identifier for each order."
+        tests:
+          - unique
+          - not_null
+
+      - name: customer_id
+        description: "Foreign Key: Links to stg_sales_localbike__customer table. Identifies which customer placed the order."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_sales_localbike__customer')
+              field: customer_id
+
+      - name: store_id
+        description: "Foreign Key: Links to stg_sales_localbike__store table. Shows which store processed the order."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_sales_localbike__store')
+              field: store_id
+
+      - name: staff_id
+        description: "Foreign Key: Links to stg_sales_localbike__staff table. Indicates which staff member handled the order."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_sales_localbike__staff')
+              field: staff_id
+
+  - name: stg_sales_localbike__order_item
+    description: "Staging layer for order items (order lines)."
+    columns:
+      - name: pk_order_item_id
+        description: "Synthetic Primary Key: combination of order_id and item_id to ensure uniqueness for each order line."
+        tests:
+          - unique
+          - not_null
+
+      - name: order_id
+        description: "Foreign Key: Links to stg_sales_localbike__order table. Identifies the parent order."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_sales_localbike__order')
+              field: order_id
+
+      - name: item_id
+        description: "Line item identifier within the order."
+        tests:
+          - not_null
+
+      - name: product_id
+        description: "Foreign Key: Links to stg_sales_localbike__product table. Identifies which product was purchased."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_sales_localbike__product')
+              field: product_id
+
+      - name: quantity_ordered
+        description: "Number of units ordered for this item."
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+
+      - name: unit_price
+        description: "Unit price for the product."
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+
+      - name: discount
+        description: "Discount applied to the product."
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+              max_value: 1
+
+      - name: total_order_item_amount
+        description: "Calculated total cost for this order line."
+        tests:
+          - not_null
+
+  - name: stg_sales_localbike__customer
+    description: "Staging layer for customers."
+    columns:
+      - name: customer_id
+        description: "Primary Key: Unique identifier for each customer."
+        tests:
+          - unique
+          - not_null
+
+      - name: customer_email
+        description: "Customer's email address. Should ideally be unique but may contain duplicates or nulls."
+
+  - name: stg_sales_localbike__store
+    description: "Staging layer for stores. Contains basic store info."
+    columns:
+      - name: store_id
+        description: "Primary Key: Unique identifier for each store."
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_sales_localbike__staff
+    description: "Staging layer for staff and managers. Note: hierarchy needs verification for staff_id 9 and 10."
+    columns:
+      - name: staff_id
+        description: "Primary Key: Unique identifier for each staff member."
+        tests:
+          - unique
+          - not_null
+
+      - name: first_name
+        description: "Staff member's first name."
+
+      - name: last_name
+        description: "Staff member's last name."
+
+      - name: manager_id
+        description: "Foreign Key: Self-relation to stg_sales_localbike__staff table. Identifies the manager."
+        tests:
+          - relationships:
+              to: ref('stg_sales_localbike__staff')
+              field: staff_id
+
+      - name: store_id
+        description: "Foreign Key: Links to stg_sales_localbike__store table. Indicates where the staff member works."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_sales_localbike__store')
+              field: store_id

@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: int_sales_localbike__stock_operations
+    description: '{{ doc("int_sales_localbike__stock_operations") }}'
+    columns:
+      - name: pk_stock_id
+        description: "Synthetic Primary Key for the stock record."
+        tests:
+          - unique
+          - not_null
+      - name: avg_weekly_sales
+        description: "Average number of units sold per week for this product in this store. Can be NULL if no sales history."
+      - name: stock_cover_days
+        description: "Estimated days of stock coverage based on average sales speed. NULL if avg_weekly_sales is NULL."

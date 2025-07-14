@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: int_sales_localbike__product_details
+    description: '{{ doc("int_sales_localbike__product_details") }}'
+    columns:
+      - name: product_id
+        description: "Primary Key: Unique product identifier."
+        tests:
+          - unique
+          - not_null
+      - name: brand_id
+        description: "Foreign Key: Brand ID."
+      - name: category_id
+        description: "Foreign Key: Category ID."

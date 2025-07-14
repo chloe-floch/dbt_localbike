@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: mrt_sales_localbike__sales_performance
+    description: '{{ doc("mrt_sales_localbike__sales_performance") }}'
+    columns:
+      - name: order_date
+        description: "Order date."
+      - name: store_id
+        description: "Store identifier."
+      - name: staff_id
+        description: "Staff identifier."
+      - name: product_id
+        description: "Product identifier."
+      - name: total_orders
+        description: "Number of orders placed."
+      - name: total_quantity_sold
+        description: "Total quantity of products sold."
+      - name: total_revenue
+        description: "Total revenue generated."
+      - name: avg_discount
+        description: "Average discount applied to sales."
