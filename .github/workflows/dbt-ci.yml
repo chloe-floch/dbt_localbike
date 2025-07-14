@@ -6,24 +6,24 @@ on:
       - dev  
   workflow_dispatch:  
 
-env:
-  DBT_PROFILES_DIR: ${{ github.workspace }}
-  
-  GCP_TYPE: ${{ secrets.GCP_TYPE }}
-  GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-  GCP_PRIVATE_KEY_ID: ${{ secrets.GCP_PRIVATE_KEY_ID }}
-  GCP_PRIVATE_KEY: ${{ secrets.GCP_PRIVATE_KEY }}
-  GCP_CLIENT_EMAIL: ${{ secrets.GCP_CLIENT_EMAIL }}
-  GCP_CLIENT_ID: ${{ secrets.GCP_CLIENT_ID }}
-  GCP_AUTH_URI: ${{ secrets.GCP_AUTH_URI }}
-  GCP_TOKEN_URI: ${{ secrets.GCP_TOKEN_URI }}
-  GCP_AUTH_PROVIDER_X509_CERT_URL: ${{ secrets.GCP_AUTH_PROVIDER_X509_CERT_URL }}
-  GCP_CLIENT_X509_CERT_URL: ${{ secrets.GCP_CLIENT_X509_CERT_URL }}
-
 jobs:
   dbt-dev:
     name: "Build & Test on DEV"
     runs-on: ubuntu-latest
+
+    env:
+      DBT_PROFILES_DIR: ${{ github.workspace }} 
+      GCP_TYPE: ${{ secrets.GCP_TYPE }}
+      GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+      GCP_PRIVATE_KEY_ID: ${{ secrets.GCP_PRIVATE_KEY_ID }}
+      GCP_PRIVATE_KEY: ${{ secrets.GCP_PRIVATE_KEY }}
+      GCP_CLIENT_EMAIL: ${{ secrets.GCP_CLIENT_EMAIL }}
+      GCP_CLIENT_ID: ${{ secrets.GCP_CLIENT_ID }}
+      GCP_AUTH_URI: ${{ secrets.GCP_AUTH_URI }}
+      GCP_TOKEN_URI: ${{ secrets.GCP_TOKEN_URI }}
+      GCP_AUTH_PROVIDER_X509_CERT_URL: ${{ secrets.GCP_AUTH_PROVIDER_X509_CERT_URL }}
+      GCP_CLIENT_X509_CERT_URL: ${{ secrets.GCP_CLIENT_X509_CERT_URL }}
+
     steps:
       - uses: actions/checkout@v3
 
@@ -48,6 +48,18 @@ jobs:
     name: "Deploy to PROD"
     runs-on: ubuntu-latest
     if: github.event_name == 'workflow_dispatch'
+    env:
+      DBT_PROFILES_DIR: ${{ github.workspace }} 
+      GCP_TYPE: ${{ secrets.GCP_TYPE }}
+      GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+      GCP_PRIVATE_KEY_ID: ${{ secrets.GCP_PRIVATE_KEY_ID }}
+      GCP_PRIVATE_KEY: ${{ secrets.GCP_PRIVATE_KEY }}
+      GCP_CLIENT_EMAIL: ${{ secrets.GCP_CLIENT_EMAIL }}
+      GCP_CLIENT_ID: ${{ secrets.GCP_CLIENT_ID }}
+      GCP_AUTH_URI: ${{ secrets.GCP_AUTH_URI }}
+      GCP_TOKEN_URI: ${{ secrets.GCP_TOKEN_URI }}
+      GCP_AUTH_PROVIDER_X509_CERT_URL: ${{ secrets.GCP_AUTH_PROVIDER_X509_CERT_URL }}
+      GCP_CLIENT_X509_CERT_URL: ${{ secrets.GCP_CLIENT_X509_CERT_URL }}
     steps:
       - uses: actions/checkout@v3
 
