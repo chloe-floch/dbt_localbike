@@ -1,0 +1,48 @@
+name: dbt CI/CD
+
+on:
+  push:
+    branches:
+      - dev  
+  workflow_dispatch:  
+
+jobs:
+  dbt-dev:
+    name: "Build & Test on dev"
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/dev'
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dbt
+        run: pip install dbt-bigquery
+
+      - name: Run dbt build on DEV
+        env:
+          DBT_PROFILES_DIR: .
+        run: dbt build --target dev
+
+  dbt-prod:
+    name: "Deploy to PROD"
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'  
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dbt
+        run: pip install dbt-bigquery
+
+      - name: Run dbt build on PROD
+        env:
+          DBT_PROFILES_DIR: .
+        run: dbt build --target prod
