@@ -35,6 +35,12 @@ jobs:
       - name: Install dbt
         run: pip install dbt-bigquery
 
+      - name: Install dbt dependencies
+        run: dbt deps
+
+      - name: Debug dbt connection
+        run: dbt debug --target dev
+
       - name: Run dbt build on DEV
         run: dbt build --target dev
 
@@ -52,6 +58,12 @@ jobs:
 
       - name: Install dbt
         run: pip install dbt-bigquery
+
+      - name: Install dbt dependencies
+        run: dbt deps
+
+      - name: Debug dbt connection
+        run: dbt debug --target prod
 
       - name: Run dbt build on PROD
         run: dbt build --target prod
