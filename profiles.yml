@@ -18,8 +18,6 @@ dbt_localbike:
         token_uri: "{{ env_var('GCP_TOKEN_URI') }}"
         auth_provider_x509_cert_url: "{{ env_var('GCP_AUTH_PROVIDER_X509_CERT_URL') }}"
         client_x509_cert_url: "{{ env_var('GCP_CLIENT_X509_CERT_URL') }}"
-
-
     prod:
       type: bigquery
       method: service-account-json
