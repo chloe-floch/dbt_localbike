@@ -5,6 +5,7 @@ dbt_localbike:
       type: bigquery
       method: service-account-json
       project: "{{ env_var('GCP_PROJECT_ID') }}"
+      location: EU
       dataset: "localbike_dev"
       threads: 4
       keyfile_json:
@@ -23,6 +24,7 @@ dbt_localbike:
       method: service-account-json
       project: "{{ env_var('GCP_PROJECT_ID') }}"
       dataset: "localbike_prod"
+      location: EU
       threads: 4
       keyfile_json:
         type: "{{ env_var('GCP_TYPE') }}"
