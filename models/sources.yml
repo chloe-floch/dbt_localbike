@@ -3,7 +3,6 @@ version: 2
 sources:
   - name: sales_localbike
     description: "Source tables for Local Bike sales and operations data."
-    database: lacalbike-analytics
     schema: sales_localbike
     tables:
       - name: brand
