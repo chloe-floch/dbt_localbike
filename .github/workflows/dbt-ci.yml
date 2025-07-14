@@ -7,7 +7,7 @@ on:
   workflow_dispatch:  
 
 env:
-  DBT_PROFILES_DIR: ${{ github.workspace }}/dbt_localbike  
+  DBT_PROFILES_DIR: ${{ github.workspace }}
   
   GCP_TYPE: ${{ secrets.GCP_TYPE }}
   GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
